@@ -16,13 +16,63 @@ namespace StringVersionNumber.Controllers
         public string Get(string numberString)
         {
             string numberStringTemp = RemoveSpecialCharacters(numberString);
+            string result = String.Empty;
+
+            int padding = 3 - (numberStringTemp.Length % 3);
+
+            if(padding < 3)
+            {
+                numberStringTemp = numberStringTemp.PadLeft(numberStringTemp.Length + padding, '0');
+            }
+
+            if (numberStringTemp == "000")
+                return "zero";
+
+            //Trillion
+            if (numberStringTemp.Length > 12)
+            {
+                result += GetHundredString(numberStringTemp, "trillion");
+                numberStringTemp = numberStringTemp.Remove(0, 3);
+            }
+            //Billion
+           if (numberStringTemp.Length > 9)
+           {
+                result += GetHundredString(numberStringTemp, "billion");
+                numberStringTemp = numberStringTemp.Remove(0, 3);
+            }
+            //Million
+            if (numberStringTemp.Length > 6)
+            {
+                result += GetHundredString(numberStringTemp, "million");
+                numberStringTemp = numberStringTemp.Remove(0, 3);
+            }
+            
+            //Thousand
+           if (numberStringTemp.Length > 3)
+           {
+
+                result += GetHundredString(numberStringTemp, "thousand");
+                numberStringTemp = numberStringTemp.Remove(0, 3);
+            }
+   
+            //hundreds
+            if (numberStringTemp.Length > 0)
+           {
+                result += GetHundredString(numberStringTemp, string.Empty);
+            }
+
+            result = result.Trim();
+
+            return result;
+        }
+
+        public string GetHundredString(string numberString,string numberSuffix)
+        {
+           string numberStringTemp = numberString.Substring(0, 3);
+            numberString = numberString.Remove(0, 3);
 
 
-
-            if (string.IsNullOrEmpty(numberStringTemp))
-                return string.Empty;
-
-            decimal numberDecimal = 0M;
+            decimal numberDecimal = 0;
 
             try
             {
@@ -32,10 +82,11 @@ namespace StringVersionNumber.Controllers
             {
 
             }
+            if (numberDecimal == 0M)
+                return string.Empty;
+            else
+                return $"{HundredsString(numberDecimal)} {numberSuffix}";
 
-            string number = HundredsString(numberDecimal);
-
-            return number;
         }
 
         private string RemoveSpecialCharacters(string numberString)
@@ -84,7 +135,7 @@ namespace StringVersionNumber.Controllers
                 hundredString += $" {Ones(hundredTemp)}";
             }
 
-            hundredString = FormatString(hundredString);
+       //     hundredString = FormatString(hundredString);
 
             return hundredString;
 
