@@ -31,7 +31,7 @@ namespace StringVersionNumberTest
         {
             DecimalToStringController controller = new DecimalToStringController();
             string value = controller.HundredsString(999M);
-            Assert.AreEqual("nine hundred ninety nine", value.Trim());
+            Assert.AreEqual("nine hundred ninety-nine", value.Trim());
         }
         [Test]
         public void oneTest()
@@ -64,7 +64,7 @@ namespace StringVersionNumberTest
 
             DecimalToStringController controller = new DecimalToStringController();
             string value = controller.HundredsString(55M);
-            Assert.AreEqual("fifty five", value.Trim());
+            Assert.AreEqual("fifty-five", value.Trim());
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace StringVersionNumberTest
 
             DecimalToStringController controller = new DecimalToStringController();
             string value = controller.Get("1888");
-            Assert.AreEqual("one thousand eight hundred eighty eight", value);
+            Assert.AreEqual("one thousand eight hundred eighty-eight", value);
         }
 
         [Test]
@@ -91,7 +91,7 @@ namespace StringVersionNumberTest
 
             DecimalToStringController controller = new DecimalToStringController();
             string value = controller.Get("119223");
-            Assert.AreEqual("one hundred nineteen thousand two hundred twenty three", value);
+            Assert.AreEqual("one hundred nineteen thousand two hundred twenty-three", value);
         }
 
         [Test]
@@ -118,7 +118,7 @@ namespace StringVersionNumberTest
 
             DecimalToStringController controller = new DecimalToStringController();
             string value = controller.Get("13232000000");
-            Assert.AreEqual("thirteen billion two hundred thirty two million", value);
+            Assert.AreEqual("thirteen billion two hundred thirty-two million", value);
         }
 
         [Test]
@@ -127,7 +127,7 @@ namespace StringVersionNumberTest
 
             DecimalToStringController controller = new DecimalToStringController();
             string value = controller.Get("18000000000000");
-            Assert.AreEqual("eightteen trillion", value);
+            Assert.AreEqual("eighteen trillion", value);
         }
 
 

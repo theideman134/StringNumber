@@ -128,8 +128,12 @@ namespace StringVersionNumber.Controllers
                 int tensvalue = ((int)hundredTemp / 10) * 10;
                 hundredString += $" {Tens(tensvalue)}";
                 hundredTemp = (int)hundredTemp % 10;
+                if (hundredTemp > 0)
+                {
+                    hundredString += $"-{Ones(hundredTemp)}";
+                    hundredTemp = 0;
+                }
             }
-
             if (hundredTemp > 0)
             {
                 hundredString += $" {Ones(hundredTemp)}";
@@ -186,7 +190,7 @@ namespace StringVersionNumber.Controllers
                 case 17M:
                     return "seventeen";
                 case 18M:
-                    return "eightteen";
+                    return "eighteen";
                 case 19M:
                     return "nineteen";
                 default:
@@ -203,7 +207,7 @@ namespace StringVersionNumber.Controllers
                 case 30M:
                     return "thirty";
                 case 40M:
-                    return "fourty";
+                    return "forty";
                 case 50M:
                     return "fifty";
                 case 60M:
