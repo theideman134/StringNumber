@@ -12,25 +12,51 @@ namespace StringVersionNumber.Controllers
     public class StringToDecimalController : ControllerBase
     {
         [HttpGet("{stringNum}")]
-        public string Get(string stringNum)
+        public long Get(string stringNum)
         {
+            string tempStringNum = stringNum;
 
             int[] intArray = new int[6];
 
-            //trillion
-            //intArray[0]
-            //billion
-            //intArray[1]
-            //million
-            //intArray[2]
-            //thousand
-            // intArray[3]
-            // hundreds
-            //intArray[4]
-            // cents
-            // intArray[5]
 
-            return string.Empty;
+            //trillion
+            intArray[0] = FirstHundredtoInt(tempStringNum, "trillion", out tempStringNum);
+            //billion
+            intArray[1] = FirstHundredtoInt(tempStringNum, "billion", out tempStringNum);
+            //million
+            intArray[2] = FirstHundredtoInt(tempStringNum, "million", out tempStringNum);
+            //thousand
+            intArray[3] = FirstHundredtoInt(tempStringNum, "thousand", out tempStringNum);
+            // hundreds
+            intArray[4] = FirstHundredtoInt(tempStringNum, string.Empty, out tempStringNum);
+            // cents
+            //  intArray[5] = FirstHundredtoInt(tempStringNum, "trillion", out tempStringNum);
+
+            return CalculateNumber(intArray);
+        }
+
+        public long CalculateNumber(int[] intArray)
+        {
+            return intArray[0] * (long)Math.Pow(10, 12) + intArray[1] * (long)Math.Pow(10, 9) + intArray[2] * (long)Math.Pow(10, 6) + intArray[3] * (long)Math.Pow(10,3) + intArray[4];
+
+        }
+
+        public int FirstHundredtoInt(string stringNum, string regionType,out string stringSplit)
+        {
+            if (string.IsNullOrEmpty(stringNum) || (!string.IsNullOrEmpty(regionType) && !stringNum.Contains(regionType)))
+            {
+                stringSplit = stringNum;
+                return 0;
+            }
+            string[] stringNumSplit = stringNum.Split(regionType,StringSplitOptions.RemoveEmptyEntries);
+       
+            if (stringNumSplit.Length >= 2)
+                stringSplit = stringNumSplit[1];
+            else
+                stringSplit = string.Empty;
+
+            return HundredStringtoInt(stringNumSplit[0]);
+
         }
 
         public int HundredStringtoInt(string hundred)
@@ -55,7 +81,7 @@ namespace StringVersionNumber.Controllers
             }
             else
             {
-                hundredInt = StringtoInt(hundred.Trim());
+                hundredInt = StringTenstoInt(hundred.Trim());
             }
 
             return hundredInt;

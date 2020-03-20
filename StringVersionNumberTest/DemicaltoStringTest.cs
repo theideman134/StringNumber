@@ -139,6 +139,15 @@ namespace StringVersionNumberTest
             string value = controller.Get("0");
             Assert.AreEqual("zero", value);
         }
+        [Test]
+        public void TrillionTest()
+        {
+            var stringToDecimalController = new StringToDecimalController();
+
+            stringToDecimalController.Get("one trillion");
+
+
+        }
 
     }
 }
